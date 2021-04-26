@@ -24,8 +24,9 @@ export default {
   },
   data() {
     return {
-      title: 'Vue Admin Template',
+      title: '蒙商智慧服务站后台',
       logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      // logo: require("@/assets/logo.png")
     }
   }
 }

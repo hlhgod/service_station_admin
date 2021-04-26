@@ -66,13 +66,13 @@ export const constantRoutes = [
         path: 'table',
         name: 'Table',
         component: () => import('@/views/table/index'),
-        meta: { title: '图片设置', icon: 'table' }
+        meta: { title: '图片设置', icon: 'el-icon-picture' }
       },
       {
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: '内容管理', icon: 'tree' }
+        meta: { title: '内容管理', icon: 'document' }
       }
     ]
   },
@@ -141,6 +141,30 @@ export const constantRoutes = [
       title: '领导构成',
       icon: 'nested'
     }
+  },
+  {
+    path: '/nested',
+    component: Layout,
+    redirect: '/nested/menu1',
+    name: 'Nested',
+    meta: {
+      title: '系统管理',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'table',
+        name: 'Table',
+        component: () => import('@/views/table/index'),
+        meta: { title: '角色管理', icon: 'table' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import('@/views/tree/index'),
+        meta: { title: '用户管理', icon: 'tree' }
+      }
+    ]
   },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
