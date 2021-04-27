@@ -27,7 +27,7 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: false,//process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
     port: port,
@@ -36,6 +36,17 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    proxy: {
+              '/upload': {
+                target: 'https://jsonplaceholder.typicode.com/posts/',   //要访问的跨域的域名
+                ws: true,  // 是否启用websockets
+                changeOrigin: true, //开启代理：在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样客户端端和服务端进行数据的交互就不会有跨域问题
+                pathRewrite: {  //重写匹配的字段，如果不需要在请求路径上，重写为""
+                  "^/upload": "",
+                }
+              },
+            
+            },
     before: require('./mock/mock-server.js')
   },
   configureWebpack: {

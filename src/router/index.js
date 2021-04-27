@@ -46,122 +46,163 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/home',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
+      path: 'home',
+      name: 'home',
+      component: () => import('@/views/home/index'),
       meta: { title: '首页设置', icon: 'dashboard' }
     }]
   },
 
   {
-    path: '/example',
+    path: '/dangjianservice',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
+    redirect: '/dangjianservice/headimage',
+    name: 'dangjianservice',
     meta: { title: '党建服务', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
+        path: 'headimage',
+        name: 'headimage',
+        component: () => import('@/views/dangjianservice/headimage/index'),
         meta: { title: '图片设置', icon: 'el-icon-picture' }
       },
       {
         path: 'tree',
         name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        component: () => import('@/views/dangjianservice/content/index'),
         meta: { title: '内容管理', icon: 'document' }
+      }
+    ]
+  },
+
+
+  {
+    path: '/hurreybusiness',
+    component: Layout,
+    redirect:import('@/views/hurreybusiness/index'),
+    name: 'hurreybusiness',
+    
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/hurreybusiness/index'),
+        meta: { title: '兴百企', icon: 'el-icon-picture' }
+      }
+    ]
+  },
+  {
+    path: '/investment',
+    component: Layout,
+    redirect:import('@/views/investment/index'),
+    name: 'investment',
+    
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/investment/index'),
+        meta: { title: '百企招百商', icon: 'el-icon-picture' }
       }
     ]
   },
 
   
   {
-    path: '/nested',
+    path: '/policy',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: '兴百企',
-      icon: 'nested'
-    }
-  },
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: '百企招百商',
-      icon: 'nested'
-    }
+    redirect:import('@/views/policy/index'),
+    name: 'policy',
     
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/policy/index'),
+        meta: { title: '政策管理', icon: 'el-icon-picture' }
+      }
+    ]
   },
 
+  
   {
-    path: '/nested',
+    path: '/bridge',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: '政策管理',
-      icon: 'nested'
-    }
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: '金融服务',
-      icon: 'nested'
-    }
+    redirect:import('@/views/bridge/index'),
+    name: 'bridge',
+    
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/bridge/index'),
+        meta: { title: '金融服务', icon: 'el-icon-picture' }
+      }
+    ]
   },
   {
-    path: '/nested',
+    path: '/talk',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/views/talk/nodistribute',
+    name: 'talk',
     meta: {
       title: '政企恳谈',
       icon: 'nested'
-    }
+    },
+    children: [
+      {
+        path: 'nodistribute',
+        name: 'nodistribute',
+        component: () => import('@/views/talk/nodistribute/index'),
+        meta: { title: '待分配工单', icon: 'el-icon-picture' }
+      },
+      {
+        path: 'dobill',
+        name: 'dobill',
+        component: () => import('@/views/talk/dobill/index'),
+        meta: { title: '工单处理', icon: 'document' }
+      }
+    ]
   },
 
+  
   {
-    path: '/nested',
+    path: '/leader',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: '领导构成',
-      icon: 'nested'
-    }
+    redirect:import('@/views/leader/index'),
+    name: 'leader',
+    
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/leader/index'),
+        meta: { title: '领导构成', icon: 'el-icon-picture' }
+      }
+    ]
   },
   {
-    path: '/nested',
+    path: '/system',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/system/role',
+    name: 'system',
     meta: {
       title: '系统管理',
       icon: 'nested'
     },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
+        path: 'role',
+        name: 'role',
+        component: () => import('@/views/system/role/index'),
         meta: { title: '角色管理', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        path: 'user',
+        name: 'user',
+        component: () => import('@/views/system/user/index'),
         meta: { title: '用户管理', icon: 'tree' }
       }
     ]
