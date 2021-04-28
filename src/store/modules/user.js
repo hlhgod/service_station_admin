@@ -33,6 +33,7 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
+        console.log('store:user',response)
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
@@ -53,7 +54,9 @@ const actions = {
           return reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
+        // const { name, avatar } = data
+        const name=data.account_name
+        const avatar=data.avatar
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)

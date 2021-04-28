@@ -26,13 +26,13 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
-        next()
-      } else {
+      // const hasGetUserInfo = store.getters.name
+      // if (hasGetUserInfo) {
+      //   next()
+      // } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
+          // await store.dispatch('user/getInfo')
 
           next()
         } catch (error) {
@@ -42,7 +42,15 @@ router.beforeEach(async(to, from, next) => {
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }
-      }
+        // await store.dispatch('user/resetToken')
+        // console.log(to.path)
+        // next(`/login?redirect=${to.path}`)
+        // NProgress.done()
+      // }
+      // await store.dispatch('user/resetToken')
+      //   console.log(to.path)
+      //   next(`/login?redirect=${to.path}`)
+      //   NProgress.done()
     }
   } else {
     /* has no token*/

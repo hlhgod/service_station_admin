@@ -45,7 +45,7 @@
             <img width="100%" :src="dialogImageUrl" alt="" />
         </el-dialog> -->
 
-        <el-form label-width="100px" >
+        <el-form label-width="100px">
             <el-form-item>
                 <el-table
                     ref="multipleTable"
@@ -74,12 +74,6 @@
                             </span>
                         </template>
                     </el-table-column>
-                    <el-table-column
-                        label="显示顺序"
-                        width="80"
-                        prog="order"
-                        align="center"
-                    ></el-table-column>
 
                     <el-table-column
                         label="操作"
@@ -87,7 +81,7 @@
                         align="center"
                         fixed="right"
                     >
-                        <template slot-scope="scope">
+                        <template>
                             <el-tooltip
                                 effect="dark"
                                 content="添加"
@@ -122,16 +116,21 @@
 </template>
 
 <script>
+import Sortable from "sortablejs";
+import request from "@/utils/request";
+import { getToken } from '@/utils/auth'
 export default {
     data() {
         return {
             dialogImageUrl: "",
             dialogVisible: false,
             disabled: false,
+            token:'',
+            bannerlist:'',
             tableData: [
                 {
-                    
-                    pic_url: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2610523782,3633335031&fm=26&gp=0.jpg",
+                    pic_url:
+                        "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2610523782,3633335031&fm=26&gp=0.jpg",
                     order: "上海市普陀区金沙江路 1518 弄",
                 },
                 {
@@ -164,7 +163,32 @@ export default {
             ],
         };
     },
+    mounted() {
+        let el = document.querySelectorAll(
+            ".el-table__body-wrapper > table > tbody"
+        )[0];
+        let sortable = Sortable.create(el);
+        
+        
+        // this.getBannerList().then(res=>{
+        //     let bannlist=res.data;
+
+        // });
+        this.getBannerList();
+        
+        // console.log(bannerlist);
+    },
     methods: {
+        async getBannerList() {
+            let token=getToken();
+            // console.log(token)
+            let bannerlist=await request({
+                url: "/banner",
+                method: "get",
+                params: { token },
+            })
+            console.log(bannerlist)
+        },
         submitUpload() {
             this.$refs.upload.submit();
         },
