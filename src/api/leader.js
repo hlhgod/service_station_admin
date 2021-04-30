@@ -5,30 +5,30 @@ const token=getToken()
 
 export function fetchList(query) {
   return request({
-    url: '/party-building',
+    url: '/leader-team',
     method: 'get',
     params: query
   })
 }
 
+export function deleteArticle(id) {
+  return request({
+    url: `/leader-team/${id}`,
+    method: 'delete',
+  })
+}
+
 export function fetchArticle(id) {
   return request({
-    url: '/party-building/detail',
+    url: '/leader-team/detail',
     method: 'get',
     params: { id }
   })
 }
 
-export function deleteArticle(id) {
-  return request({
-    url: `/party-building/${id}`,
-    method: 'delete',
-  })
-}
-
 export function fetchPv(pv) {
   return request({
-    url: '/party-building/pv',
+    url: '/leader-team/pv',
     method: 'get',
     params: { pv }
   })
@@ -36,7 +36,7 @@ export function fetchPv(pv) {
 
 export function createArticle(data) {
   return request({
-    url: '/party-building',
+    url: '/leader-team',
     method: 'post',
     data,
     token,
@@ -45,7 +45,7 @@ export function createArticle(data) {
 
 export function updateArticle(data) {
   return request({
-    url: '/party-building',
+    url: '/leader-team',
     method: 'put',
     data,
     token,

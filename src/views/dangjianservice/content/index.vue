@@ -63,7 +63,7 @@
             </el-table-column>
             <el-table-column label="文章标题" min-width="250px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" @click="handleUpdate(row)">{{
+                    <span class="link-type" >{{
                         row.title
                     }}</span>
                     <el-tag>{{ row.type | typeFilter }}</el-tag>
@@ -71,7 +71,7 @@
             </el-table-column>
             <el-table-column label="备注" min-width="200px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" @click="handleUpdate(row)">{{
+                    <span class="link-type" >{{
                         row.brief
                     }}</span>
                     <el-tag>{{ row.type | typeFilter }}</el-tag>
@@ -189,6 +189,7 @@ import {
     fetchList,
     fetchPv,
     createArticle,
+    deleteArticle,
     updateArticle,
 } from "@/api/dangjianContent";
 import waves from "@/directive/waves"; // waves directive
@@ -425,13 +426,21 @@ export default {
             });
         },
         handleDelete(row, index) {
-            this.$notify({
-                title: "Success",
-                message: "Delete Successfully",
-                type: "success",
-                duration: 2000,
+            this.$confirm("请确认删除该条目?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+            }).then(() => {
+                deleteArticle(row.id).then(() => {
+                    this.$notify({
+                        title: "成功",
+                        message: "删除成功",
+                        type: "success",
+                        duration: 2000,
+                    });
+                    this.list.splice(index, 1);
+                });
             });
-            this.list.splice(index, 1);
         },
         handleFetchPv(pv) {
             fetchPv(pv).then((response) => {

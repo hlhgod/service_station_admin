@@ -2,8 +2,8 @@
     <div class="app-container">
         <div class="filter-container">
             <el-input
-                v-model="listQuery.name"
-                placeholder="名称"
+                v-model="listQuery.title"
+                placeholder="标题"
                 style="width: 200px"
                 class="filter-item"
                 @keyup.enter.native="handleFilter"
@@ -61,34 +61,27 @@
                     <span>{{ row.id }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="图片" prop="title" width="100" height="100">
-                <template slot-scope="scope">
-                    <span class="title-img">
-                        <el-image
-                            style="width: 100px; height: 100px"
-                            :src="scope.row.icon"
-                            fit="fill"
-                        ></el-image>
-                    </span>
-                </template>
-            </el-table-column>
-            <el-table-column label="名称" min-width="150px">
+            <el-table-column label="文章标题" min-width="250px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" >{{
-                        row.name
+                    <span class="link-type" @click="handleUpdate(row)">{{
+                        row.title
                     }}</span>
                     <el-tag>{{ row.type | typeFilter }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column label="网址" min-width="150px">
+            <el-table-column label="备注" min-width="200px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" >{{
-                        row.url
+                    <span class="link-type" @click="handleUpdate(row)">{{
+                        row.brief
                     }}</span>
                     <el-tag>{{ row.type | typeFilter }}</el-tag>
                 </template>
             </el-table-column>
-            
+            <el-table-column label="发布日期" width="160px" align="center">
+                <template slot-scope="{ row }">
+                    <span>{{ row.created_at }}</span>
+                </template>
+            </el-table-column>
 
             <el-table-column
                 label="操作"
@@ -138,36 +131,28 @@
                 label-width="80px"
                 style="width: 80%; margin-left: 50px"
             >
-                <el-form-item label="图片" prop="title">
-                    <el-image
-                        style="width: 100px; height: 100px"
-                        :src="temp.icon"
-                        fit="fill"
-                    ></el-image>
-                    <el-upload
-                        class="upload-demo"
-                        :action="uploadAddress"
-                        :on-success="handleUploadSuccess"
-                        :show-file-list="false"
-                        :limit="1"
-                    >
-                        <el-button slot="trigger" type="primary"
-                            >增加图片</el-button
-                        >
-                    </el-upload>
+                <el-form-item label="发布日期" prop="created_at">
+                    <el-date-picker
+                        v-model="temp.created_at"
+                        type="datetime"
+                        placeholder="请选择一个日期"
+                    />
+                </el-form-item>
+                <el-form-item label="文章标题" prop="title">
+                    <el-input v-model="temp.title" />
                 </el-form-item>
 
-                <el-form-item label="名称" prop="title">
-                    <el-input v-model="temp.name" />
+                <el-form-item label="备注" prop="title">
+                    <el-input v-model="temp.brief" />
                 </el-form-item>
-
-                <el-form-item label="网址" prop="title">
-                    <el-input v-model="temp.url" />
+                <el-form-item label="文章内容" prop="content">
+                    <tinymce v-model="temp.content" :height="300" />
                 </el-form-item>
-
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false"> 取消 </el-button>
+                <el-button @click="dialogFormVisible = false">
+                    取消
+                </el-button>
                 <el-button
                     type="primary"
                     @click="
@@ -206,7 +191,7 @@ import {
     createArticle,
     deleteArticle,
     updateArticle,
-} from "@/api/bridge";
+} from "@/api/policy";
 import waves from "@/directive/waves"; // waves directive
 import { parseTime } from "@/utils";
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
@@ -229,7 +214,7 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
 
 export default {
     name: "ComplexTable",
-    components: { Pagination, Tinymce },
+    components: { Pagination,Tinymce},
     directives: { waves },
     filters: {
         statusFilter(status) {
@@ -251,12 +236,12 @@ export default {
             total: 0,
             token: "",
             listLoading: true,
-            uploadAddress: "",
+            
             listQuery: {
                 page: 1,
                 limit: 20,
                 importance: undefined,
-                name:"",
+                title: undefined,
                 type: undefined,
                 sort: "+id",
             },
@@ -270,8 +255,10 @@ export default {
             showReviewer: false,
             temp: {
                 id: undefined,
-                name: "",
-                url:""
+                created_at: new Date(),
+                title: "",
+                brief: "",
+                content:"",
             },
             dialogFormVisible: false,
             dialogStatus: "",
@@ -281,15 +268,36 @@ export default {
             },
             dialogPvVisible: false,
             pvData: [],
-            rules: {},
+            rules: {
+                type: [
+                    {
+                        required: true,
+                        message: "type is required",
+                        trigger: "change",
+                    },
+                ],
+                timestamp: [
+                    {
+                        type: "date",
+                        required: true,
+                        message: "timestamp is required",
+                        trigger: "change",
+                    },
+                ],
+                title: [
+                    {
+                        required: true,
+                        message: "title is required",
+                        trigger: "blur",
+                    },
+                ],
+            },
             downloadLoading: false,
         };
     },
     created() {
         this.token = getToken();
         this.getList();
-        this.uploadAddress =
-            process.env.VUE_APP_BASE_API + "/upload/pic?token=" + this.token;
     },
     methods: {
         getList() {
@@ -297,7 +305,7 @@ export default {
             this.listQuery["token"] = this.token;
 
             fetchList(this.listQuery).then((response) => {
-                console.log(response);
+                console.log(response)
                 this.list = response.data.data;
                 this.total = response.data.total;
 
@@ -355,13 +363,13 @@ export default {
             this.$refs["dataForm"].validate((valid) => {
                 if (valid) {
                     this.temp.id = parseInt(Math.random() * 100) + 1024; // mock a id
-
+                    
                     createArticle(this.temp).then(() => {
                         this.list.unshift(this.temp);
                         this.dialogFormVisible = false;
                         this.$notify({
                             title: "Success",
-                            message: "增加成功",
+                            message: "Created Successfully",
                             type: "success",
                             duration: 2000,
                         });
@@ -370,17 +378,19 @@ export default {
             });
         },
         handleUpdate(row) {
+
             this.temp = Object.assign({}, row); // copy obj
-            console.log("temp:", this.temp);
-            this.getContent(this.temp.id);
+            console.log('temp:',this.temp)
+            this.getContent(this.temp.id)
             this.temp.created_at = new Date(this.temp.created_at);
             this.dialogStatus = "update";
             this.dialogFormVisible = true;
             this.$nextTick(() => {
                 this.$refs["dataForm"].clearValidate();
             });
+            
         },
-        getContent(id) {
+        getContent(id){
             request({
                 url: `/party-building/${id}?token=${this.token}`,
                 method: "get",
@@ -388,8 +398,8 @@ export default {
                     token: this.token,
                 },
             }).then((res) => {
-                console.log("content", res);
-                this.$set(this.temp, "content", res.data.content);
+                console.log('content',res);
+                this.$set(this.temp,'content',res.data.content)
                 // this.temp.content=res.data.content;
                 // console.log("temp",this.temp);
             });
@@ -407,7 +417,7 @@ export default {
                         this.dialogFormVisible = false;
                         this.$notify({
                             title: "Success",
-                            message: "更新成功",
+                            message: "Update Successfully",
                             type: "success",
                             duration: 2000,
                         });
@@ -478,15 +488,6 @@ export default {
         getSortClass: function (key) {
             const sort = this.listQuery.sort;
             return sort === `+${key}` ? "ascending" : "descending";
-        },
-        handleUploadSuccess(res, file) {
-            // console.log('res',res,'file',file)
-
-            // let imageUrl = URL.createObjectURL(file.raw);
-            console.log("res", res);
-            this.$set(this.temp, "icon", res.data[0].file_url);
-            console.log("temp", this.temp);
-            // console.log('raw',file.raw);
         },
     },
 };

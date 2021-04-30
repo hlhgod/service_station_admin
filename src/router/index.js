@@ -69,8 +69,8 @@ export const constantRoutes = [
         meta: { title: '图片设置', icon: 'el-icon-picture' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
+        path: 'content',
+        name: 'content',
         component: () => import('@/views/dangjianservice/content/index'),
         meta: { title: '内容管理', icon: 'document' }
       }
@@ -113,15 +113,21 @@ export const constantRoutes = [
   {
     path: '/policy',
     component: Layout,
-    redirect:import('@/views/policy/index'),
+    redirect:import('@/views/policy/headimage/index'),
     name: 'policy',
-    
+    meta: { title: '政策法规', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'index',
-        name: 'index',
-        component: () => import('@/views/policy/index'),
-        meta: { title: '政策管理', icon: 'el-icon-picture' }
+        path: 'headimage',
+        name: 'headimage',
+        component: () => import('@/views/policy/headimage/index'),
+        meta: { title: '图片设置', icon: 'el-icon-picture' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: () => import('@/views/policy/content/index'),
+        meta: { title: '内容管理', icon: 'document' }
       }
     ]
   },

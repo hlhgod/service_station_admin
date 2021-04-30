@@ -63,8 +63,8 @@ export default {
       tinymceId: this.id,
       fullscreen: false,
       languageTypeList: {
-        'en': 'en',
         'zh': 'zh_CN',
+        'en': 'en',
         'es': 'es_MX',
         'ja': 'ja'
       }
@@ -116,7 +116,7 @@ export default {
       const _this = this
       window.tinymce.init({
         selector: `#${this.tinymceId}`,
-        language: this.languageTypeList['en'],
+        language: this.languageTypeList['zh'],
         height: this.height,
         body_class: 'panel-body ',
         object_resizing: false,
@@ -132,6 +132,8 @@ export default {
         imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
         default_link_target: '_blank',
         link_title: false,
+        font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif',
+        fontsize_formats: '11px 12px 14px 16px 18px 24px 36px 48px',
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
         init_instance_callback: editor => {
           if (_this.value) {
