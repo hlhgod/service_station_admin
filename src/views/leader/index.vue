@@ -77,7 +77,7 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.name
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                   
                 </template>
             </el-table-column>
             <el-table-column label="性别" min-width="150px">
@@ -85,7 +85,7 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.gender === 1 ? "男" : "女"
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="职务" min-width="150px">
@@ -93,7 +93,7 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.office
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="出生年月" min-width="100px">
@@ -101,7 +101,7 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.birth
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="籍贯" min-width="150px">
@@ -109,7 +109,7 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.domicile
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="部门" min-width="150px">
@@ -117,7 +117,7 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.department
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="联系方式" min-width="100px">
@@ -125,7 +125,7 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.contact_way
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="地址" min-width="200px">
@@ -133,7 +133,7 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.address
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
 

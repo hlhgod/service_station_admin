@@ -66,14 +66,14 @@
                     <span class="link-type" >{{
                         row.title
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="附件" min-width="200px">
                 <template slot-scope="{ row }">
                     <div class="link-type" v-for="item in row.attachment" :key="item.id">
                         <a :href="item.url"><i class="el-icon-tickets"></i>{{item.name}}</a></div>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="发布日期" width="160px" align="center">

@@ -77,7 +77,7 @@
                     <span class="link-type" >{{
                         row.name
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="网址" min-width="150px">
@@ -85,7 +85,7 @@
                     <span class="link-type" >{{
                         row.official_website
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="地址" min-width="200px">
@@ -93,7 +93,7 @@
                     <span class="link-type" >{{
                         row.address
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="联系方式" min-width="100px">
@@ -101,7 +101,7 @@
                     <span class="link-type" >{{
                         row.contact_way
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="简介" min-width="200px">
@@ -109,7 +109,7 @@
                     <span class="link-type" >{{
                         row.introduction
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                   
                 </template>
             </el-table-column>
 

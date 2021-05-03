@@ -66,7 +66,7 @@
                     <span class="link-type" >{{
                         row.title
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                    
                 </template>
             </el-table-column>
             <el-table-column label="备注" min-width="200px">
@@ -74,7 +74,7 @@
                     <span class="link-type" >{{
                         row.brief
                     }}</span>
-                    <el-tag>{{ row.type | typeFilter }}</el-tag>
+                   
                 </template>
             </el-table-column>
             <el-table-column label="发布日期" width="160px" align="center">
