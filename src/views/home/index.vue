@@ -1,67 +1,20 @@
 <template>
     <div>
-        <!-- <el-upload
-            action="#"
-            list-type="picture-card"
-            :auto-upload="false"
-            multiple
-            :on-change="handleChange"
-            :file-list="fileList"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-        >
-            <i slot="default" class="el-icon-plus"></i>
-            <div slot="file" slot-scope="{ file }">
-                <img
-                    class="el-upload-list__item-thumbnail"
-                    :src="file.url"
-                    alt=""
-                />
-                <span class="el-upload-list__item-actions">
-                    <span
-                        class="el-upload-list__item-preview"
-                        @click="handlePictureCardPreview(file)"
-                    >
-                        <i class="el-icon-zoom-in"></i>
-                    </span>
-                    <span
-                        v-if="!disabled"
-                        class="el-upload-list__item-delete"
-                        @click="handleDownload(file)"
-                    >
-                        <i class="el-icon-download"></i>
-                    </span>
-                    <span
-                        v-if="!disabled"
-                        class="el-upload-list__item-delete"
-                        @click="handleRemove(file)"
-                    >
-                        <i class="el-icon-delete"></i>
-                    </span>
-                </span>
-            </div> </el-upload
-        >>
-        <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="" />
-        </el-dialog> -->
-
         <el-form label-width="100px">
             <el-form-item>
                 <el-table
                     ref="multipleTable"
                     :data="bannerlist"
                     border
-                    :header-cell-style="{
-                        'text-align': 'center',
-                        'background-color': '#eee',
-                    }"
+                    
                     highlight-current-row
-                    style="width: 60%; margin-bottom: 100px"
+                    style="width: 100%; margin-bottom: 100px"
                 >
                     <el-table-column
                         type="index"
-                        width="55"
+                        width="60"
                         align="center"
+                        label="序号"
                     ></el-table-column>
                     <el-table-column label="图片" prop="title" width="400">
                         <template slot-scope="scope">
@@ -77,9 +30,9 @@
 
                     <el-table-column
                         label="操作"
-                        width="200"
+                        width="100"
                         align="center"
-                        fixed="right"
+                        
                     >
                         <template slot-scope="scope">
                             <el-tooltip

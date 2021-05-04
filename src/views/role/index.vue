@@ -156,7 +156,7 @@ export default {
                 api.deleteById(id).then(response => {
                     // 处理响应结果提示
                     this.$message({
-                        type: response.code === 20000 ? 'success': 'error',
+                        type: response.code === 0 ? 'success': 'error',
                         message: response.message
                     })
                 })

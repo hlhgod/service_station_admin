@@ -1,42 +1,47 @@
 <template>
     <div class="app-container">
         <div class="filter-container">
-            <el-input
-                v-model="listQuery.title"
-                placeholder="标题"
-                style="width: 200px"
-                class="filter-item"
-                @keyup.enter.native="handleFilter"
-            />
-
-            <el-button
-                v-waves
-                class="filter-item"
-                type="primary"
-                icon="el-icon-search"
-                @click="handleFilter"
-            >
-                查找
-            </el-button>
-            <el-button
-                class="filter-item"
-                style="margin-left: 10px"
-                type="primary"
-                icon="el-icon-edit"
-                @click="handleCreate"
-            >
-                增加
-            </el-button>
-            <el-button
-                v-waves
-                :loading="downloadLoading"
-                class="filter-item"
-                type="primary"
-                icon="el-icon-download"
-                @click="handleDownload"
-            >
-                导出
-            </el-button>
+            <el-form :inline="true" :model="query" size="mini">
+                <el-form-item label="标题名称：">
+                    <el-input
+                        v-model="listQuery.title"
+                        placeholder="标题"
+                        style="width: 200px"
+                        class="filter-item"
+                        @keyup.enter.native="handleFilter"
+                    />
+                </el-form-item>
+                <el-form-item>
+                    <el-button
+                        v-waves
+                        class="filter-item"
+                        type="primary"
+                        icon="el-icon-search"
+                        @click="handleFilter"
+                    >
+                        查找
+                    </el-button>
+                    <el-button
+                        class="filter-item"
+                        style="margin-left: 10px"
+                        type="primary"
+                        icon="el-icon-edit"
+                        @click="handleCreate"
+                    >
+                        增加
+                    </el-button>
+                    <el-button
+                        v-waves
+                        :loading="downloadLoading"
+                        class="filter-item"
+                        type="primary"
+                        icon="el-icon-download"
+                        @click="handleDownload"
+                    >
+                        导出
+                    </el-button>
+                </el-form-item>
+            </el-form>
         </div>
 
         <el-table
@@ -63,18 +68,12 @@
             </el-table-column>
             <el-table-column label="文章标题" min-width="250px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" >{{
-                        row.title
-                    }}</span>
-                    
+                    <span class="link-type">{{ row.title }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="备注" min-width="200px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" >{{
-                        row.brief
-                    }}</span>
-                   
+                    <span class="link-type">{{ row.brief }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="发布日期" width="160px" align="center">
@@ -150,9 +149,7 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">
-                    取消
-                </el-button>
+                <el-button @click="dialogFormVisible = false"> 取消 </el-button>
                 <el-button
                     type="primary"
                     @click="
@@ -214,7 +211,7 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
 
 export default {
     name: "ComplexTable",
-    components: { Pagination,Tinymce},
+    components: { Pagination, Tinymce },
     directives: { waves },
     filters: {
         statusFilter(status) {
@@ -236,7 +233,7 @@ export default {
             total: 0,
             token: "",
             listLoading: true,
-            
+
             listQuery: {
                 page: 1,
                 limit: 20,
@@ -258,7 +255,7 @@ export default {
                 created_at: new Date(),
                 title: "",
                 brief: "",
-                content:"",
+                content: "",
             },
             dialogFormVisible: false,
             dialogStatus: "",
@@ -305,7 +302,7 @@ export default {
             this.listQuery["token"] = this.token;
 
             fetchList(this.listQuery).then((response) => {
-                console.log(response)
+                console.log(response);
                 this.list = response.data.data;
                 this.total = response.data.total;
 
@@ -363,7 +360,7 @@ export default {
             this.$refs["dataForm"].validate((valid) => {
                 if (valid) {
                     this.temp.id = parseInt(Math.random() * 100) + 1024; // mock a id
-                    
+
                     createArticle(this.temp).then(() => {
                         this.list.unshift(this.temp);
                         this.dialogFormVisible = false;
@@ -378,19 +375,17 @@ export default {
             });
         },
         handleUpdate(row) {
-
             this.temp = Object.assign({}, row); // copy obj
-            console.log('temp:',this.temp)
-            this.getContent(this.temp.id)
+            console.log("temp:", this.temp);
+            this.getContent(this.temp.id);
             this.temp.created_at = new Date(this.temp.created_at);
             this.dialogStatus = "update";
             this.dialogFormVisible = true;
             this.$nextTick(() => {
                 this.$refs["dataForm"].clearValidate();
             });
-            
         },
-        getContent(id){
+        getContent(id) {
             request({
                 url: `/party-building/${id}?token=${this.token}`,
                 method: "get",
@@ -398,8 +393,8 @@ export default {
                     token: this.token,
                 },
             }).then((res) => {
-                console.log('content',res);
-                this.$set(this.temp,'content',res.data.content)
+                console.log("content", res);
+                this.$set(this.temp, "content", res.data.content);
                 // this.temp.content=res.data.content;
                 // console.log("temp",this.temp);
             });
@@ -451,25 +446,13 @@ export default {
         handleDownload() {
             this.downloadLoading = true;
             import("@/vendor/Export2Excel").then((excel) => {
-                const tHeader = [
-                    "timestamp",
-                    "title",
-                    "type",
-                    "importance",
-                    "status",
-                ];
-                const filterVal = [
-                    "timestamp",
-                    "title",
-                    "type",
-                    "importance",
-                    "status",
-                ];
+                const tHeader = ["id", "title", "brief", "created_at"];
+                const filterVal = ["id", "title", "brief", "created_at"];
                 const data = this.formatJson(filterVal);
                 excel.export_json_to_excel({
                     header: tHeader,
                     data,
-                    filename: "table-list",
+                    filename: "党建信息",
                 });
                 this.downloadLoading = false;
             });

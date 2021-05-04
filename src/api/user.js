@@ -27,7 +27,7 @@ export function logout() {
 // 条件分页查询用户列表
 export function getList(query, current = 1, size = 20) {
   return request({
-    url: `/user/search`,
+    url: `/account`,
     method: 'post',
     data: {...query, current, size}
   })
@@ -36,7 +36,7 @@ export function getList(query, current = 1, size = 20) {
 // 新增用户
 export function add( data ) {
   return request({
-    url: `/user`,
+    url: `/account`,
     method: 'post',
     data
   })
@@ -45,7 +45,7 @@ export function add( data ) {
 // 查询用户信息
 export function getById( id ) {
   return request({
-    url: `/user/${id}`,
+    url: `/account/${id}`,
     method: 'get'
   })
 }
@@ -53,7 +53,7 @@ export function getById( id ) {
 // 更新
 export function update( data ) {
   return request({
-    url: `/user`,
+    url: `/account`,
     method: 'put',
     data
   })
@@ -62,7 +62,7 @@ export function update( data ) {
 // 删除
 export function deleteById(id) {
   return request({
-    url: `/user/${id}`,
+    url: `/account/${id}`,
     method: 'delete'
   })
 }
@@ -70,7 +70,7 @@ export function deleteById(id) {
 // 查询用户所拥有的角色id
 export function getRoleIdsByUserId( id ) {
   return request({
-    url: `/user/${id}/role/ids`,
+    url: `/account/${id}/role/ids`,
     method: 'get'
   })
 }
@@ -78,7 +78,7 @@ export function getRoleIdsByUserId( id ) {
 // 保存用户拥有角色
 export function saveUserRole(id, roleIds) {
   return request({
-    url: `/user/${id}/role/save`,
+    url: `/account/${id}/role/save`,
     method: 'post',
     data: roleIds
   })
@@ -87,7 +87,7 @@ export function saveUserRole(id, roleIds) {
 // 提交修改新密码
 export function updatePassword(data) {
   return request({
-    url: `/user/password`,
+    url: `/account/password`,
     method: 'put',
     data
   })

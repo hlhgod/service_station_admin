@@ -1,13 +1,10 @@
-
 <template>
     <el-dialog :title="title" :visible.sync="visible" width="500px"
     :before-close="handleClose">
         <el-form :rules="rules" ref="formData" :model="formData" label-width="100px" 
             label-position="right" style="width: 400px" status-icon>
-            <el-form-item label="角色名称：" prop="name">
-                <el-input v-model="formData.name"></el-input>
-            </el-form-item>
-             <el-form-item label="备注：" prop="remark">
+            
+             <el-form-item label="处理意见：" prop="remark">
                 <el-input type="textarea" v-model="formData.remark"></el-input>
             </el-form-item>
             <el-form-item>
@@ -75,7 +72,7 @@ export default {
               response = await api.add(this.formData)
           }
 
-          if(response.code === 0) {
+          if(response.code === 20000) {
             //   提示信息
               this.$message({message: '保存成功', type: 'success'})
               // 关闭窗口

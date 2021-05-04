@@ -1,42 +1,47 @@
 <template>
     <div class="app-container">
         <div class="filter-container">
-            <el-input
-                v-model="listQuery.title"
-                placeholder="名称"
-                style="width: 200px"
-                class="filter-item"
-                @keyup.enter.native="handleFilter"
-            />
-
-            <el-button
-                v-waves
-                class="filter-item"
-                type="primary"
-                icon="el-icon-search"
-                @click="handleFilter"
-            >
-                查找
-            </el-button>
-            <el-button
-                class="filter-item"
-                style="margin-left: 10px"
-                type="primary"
-                icon="el-icon-edit"
-                @click="handleCreate"
-            >
-                增加
-            </el-button>
-            <el-button
-                v-waves
-                :loading="downloadLoading"
-                class="filter-item"
-                type="primary"
-                icon="el-icon-download"
-                @click="handleDownload"
-            >
-                导出
-            </el-button>
+            <el-form :inline="true" :model="query" size="mini">
+                <el-form-item label="企业名称：">
+                    <el-input
+                        v-model="listQuery.title"
+                        placeholder="名称"
+                        style="width: 200px"
+                        class="filter-item"
+                        @keyup.enter.native="handleFilter"
+                    />
+                </el-form-item>
+                <el-form-item>
+                    <el-button
+                        v-waves
+                        class="filter-item"
+                        type="primary"
+                        icon="el-icon-search"
+                        @click="handleFilter"
+                    >
+                        查找
+                    </el-button>
+                    <el-button
+                        class="filter-item"
+                        style="margin-left: 10px"
+                        type="primary"
+                        icon="el-icon-edit"
+                        @click="handleCreate"
+                    >
+                        增加
+                    </el-button>
+                    <el-button
+                        v-waves
+                        :loading="downloadLoading"
+                        class="filter-item"
+                        type="primary"
+                        icon="el-icon-download"
+                        @click="handleDownload"
+                    >
+                        导出
+                    </el-button>
+                </el-form-item>
+            </el-form>
         </div>
 
         <el-table
@@ -74,42 +79,27 @@
             </el-table-column>
             <el-table-column label="名称" min-width="150px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" >{{
-                        row.name
-                    }}</span>
-                    
+                    <span class="link-type">{{ row.name }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="网址" min-width="150px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" >{{
-                        row.official_website
-                    }}</span>
-                    
+                    <span class="link-type">{{ row.official_website }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="地址" min-width="200px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" >{{
-                        row.address
-                    }}</span>
-                    
+                    <span class="link-type">{{ row.address }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="联系方式" min-width="100px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" >{{
-                        row.contact_way
-                    }}</span>
-                    
+                    <span class="link-type">{{ row.contact_way }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="简介" min-width="200px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" >{{
-                        row.introduction
-                    }}</span>
-                   
+                    <span class="link-type">{{ row.introduction }}</span>
                 </template>
             </el-table-column>
 
@@ -478,24 +468,28 @@ export default {
             this.downloadLoading = true;
             import("@/vendor/Export2Excel").then((excel) => {
                 const tHeader = [
-                    "timestamp",
-                    "title",
-                    "type",
-                    "importance",
-                    "status",
+                    "id",
+                    "name",
+                    "icon",
+                    "official_website",
+                    "address",
+                    "contact_way",
+                    "introduction",
                 ];
                 const filterVal = [
-                    "timestamp",
-                    "title",
-                    "type",
-                    "importance",
-                    "status",
+                    "id",
+                    "name",
+                    "icon",
+                    "official_website",
+                    "address",
+                    "contact_way",
+                    "introduction",
                 ];
                 const data = this.formatJson(filterVal);
                 excel.export_json_to_excel({
                     header: tHeader,
                     data,
-                    filename: "table-list",
+                    filename: "兴百企",
                 });
                 this.downloadLoading = false;
             });

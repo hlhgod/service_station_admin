@@ -6,9 +6,7 @@
             <el-form-item label="用户名:">
                 <el-input v-model.trim="query.username" ></el-input>
             </el-form-item>
-            <el-form-item label="手机号:">
-                <el-input v-model.trim="query.mobile" ></el-input>
-            </el-form-item>
+            
             <el-form-item>
                 <el-button icon="el-icon-search" type="primary" @click="queryData">查询</el-button>
                 <el-button icon="el-icon-refresh"  @click="reload">重置</el-button>
@@ -24,7 +22,7 @@
             <el-table-column  align="center" type="index" label="序号" width="60"></el-table-column>
             <el-table-column  align="center" prop="username" label="用户名" ></el-table-column>
             <el-table-column  align="center" prop="nickName" label="昵称" ></el-table-column>
-            <el-table-column  align="center" prop="mobile" label="手机号" ></el-table-column>
+            
             
             
             <el-table-column  align="center" prop="isAccountNonLocked" label="帐号锁定" >

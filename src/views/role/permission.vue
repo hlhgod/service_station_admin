@@ -75,8 +75,8 @@ import roleApi from '@/api/role'
             // 加载中
             this.loading = true
             menuApi.getList( {} ).then(response => {
-                // console.log('response.data', response.data)
-                this.menuList = response.data
+                //  console.log('response.data', response.data)
+                this.menuList = response.data.data
                 // 查询角色之前所拥有的菜单ids ,然后进行回显
                 this.getMenuIdsByRoleId()
             })
@@ -87,7 +87,10 @@ import roleApi from '@/api/role'
         // 查询角色之前所拥有的菜单ids ,然后进行回显
         async getMenuIdsByRoleId() {
             const {data} = await roleApi.getMenuIdsByRoleId(this.roleId)
-            this.menuIds = data
+            //因为提交的权限是整行权限数据，这儿需要把权限中的菜单ID遍历处理
+            // this.menuIds = data
+            let menuid=data.forEach(item=>item.id)
+            this.menuIds = menuid;
         },
 
         submitForm(formName) {
@@ -95,7 +98,7 @@ import roleApi from '@/api/role'
            const checkedMenuIds = this.$refs.tree.getCheckedKeys()
            // 调用保存角色权限菜单接口
            roleApi.saveRoleMenu(this.roleId, checkedMenuIds ).then(response => {
-               if(response.code === 20000) {
+               if(response.code === 0) {
                    this.$message({message: '分配权限成功', type: 'success'})
                    //关闭窗口
                    this.handleClose()

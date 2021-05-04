@@ -1,42 +1,47 @@
 <template>
     <div class="app-container">
         <div class="filter-container">
-            <el-input
-                v-model="listQuery.title"
-                placeholder="名字"
-                style="width: 200px"
-                class="filter-item"
-                @keyup.enter.native="handleFilter"
-            />
-
-            <el-button
-                v-waves
-                class="filter-item"
-                type="primary"
-                icon="el-icon-search"
-                @click="handleFilter"
-            >
-                查找
-            </el-button>
-            <el-button
-                class="filter-item"
-                style="margin-left: 10px"
-                type="primary"
-                icon="el-icon-edit"
-                @click="handleCreate"
-            >
-                增加
-            </el-button>
-            <el-button
-                v-waves
-                :loading="downloadLoading"
-                class="filter-item"
-                type="primary"
-                icon="el-icon-download"
-                @click="handleDownload"
-            >
-                导出
-            </el-button>
+            <el-form :inline="true" :model="query" size="mini">
+                <el-form-item label="名字：">
+                    <el-input
+                        v-model="listQuery.title"
+                        placeholder="名字"
+                        style="width: 200px"
+                        class="filter-item"
+                        @keyup.enter.native="handleFilter"
+                    />
+                </el-form-item>
+                <el-form-item>
+                    <el-button
+                        v-waves
+                        class="filter-item"
+                        type="primary"
+                        icon="el-icon-search"
+                        @click="handleFilter"
+                    >
+                        查找
+                    </el-button>
+                    <el-button
+                        class="filter-item"
+                        style="margin-left: 10px"
+                        type="primary"
+                        icon="el-icon-edit"
+                        @click="handleCreate"
+                    >
+                        增加
+                    </el-button>
+                    <el-button
+                        v-waves
+                        :loading="downloadLoading"
+                        class="filter-item"
+                        type="primary"
+                        icon="el-icon-download"
+                        @click="handleDownload"
+                    >
+                        导出
+                    </el-button>
+                </el-form-item>
+            </el-form>
         </div>
 
         <el-table
@@ -77,7 +82,6 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.name
                     }}</span>
-                   
                 </template>
             </el-table-column>
             <el-table-column label="性别" min-width="150px">
@@ -85,7 +89,6 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.gender === 1 ? "男" : "女"
                     }}</span>
-                    
                 </template>
             </el-table-column>
             <el-table-column label="职务" min-width="150px">
@@ -93,7 +96,6 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.office
                     }}</span>
-                    
                 </template>
             </el-table-column>
             <el-table-column label="出生年月" min-width="100px">
@@ -101,7 +103,6 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.birth
                     }}</span>
-                    
                 </template>
             </el-table-column>
             <el-table-column label="籍贯" min-width="150px">
@@ -109,7 +110,6 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.domicile
                     }}</span>
-                    
                 </template>
             </el-table-column>
             <el-table-column label="部门" min-width="150px">
@@ -117,7 +117,6 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.department
                     }}</span>
-                    
                 </template>
             </el-table-column>
             <el-table-column label="联系方式" min-width="100px">
@@ -125,7 +124,6 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.contact_way
                     }}</span>
-                    
                 </template>
             </el-table-column>
             <el-table-column label="地址" min-width="200px">
@@ -133,7 +131,6 @@
                     <span class="link-type" @click="handleUpdate(row)">{{
                         row.address
                     }}</span>
-                    
                 </template>
             </el-table-column>
 
@@ -210,8 +207,8 @@
 
                 <el-form-item label="性别" prop="gender">
                     <template
-                        ><el-radio v-model="gender" label=1>男</el-radio>
-                        <el-radio v-model="gender" label=0>女</el-radio>
+                        ><el-radio v-model="gender" label="1">男</el-radio>
+                        <el-radio v-model="gender" label="0">女</el-radio>
                     </template>
                 </el-form-item>
                 <el-form-item label="职务" prop="office">

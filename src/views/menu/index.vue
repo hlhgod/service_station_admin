@@ -24,12 +24,12 @@
             <el-table-column  align="center" prop="name" label="名称" ></el-table-column>
             <el-table-column  align="center" prop="url" label="请求地址" ></el-table-column>
             <el-table-column  align="center" prop="code" label="权限标识" ></el-table-column>
-            <el-table-column  align="center" prop="type" label="类型" >
+            <el-table-column  align="center" prop="temp_type" label="类型" >
                 <template slot-scope="scope">
                     <!-- 1目录，2菜单，3按钮 -->
-                    <span v-if="scope.row.type === 1">目录</span>
-                    <span v-if="scope.row.type === 2">菜单</span>
-                    <span v-if="scope.row.type === 3">按钮</span>
+                    <span v-if="scope.row.temp_type === 1">目录</span>
+                    <span v-if="scope.row.temp_type === 2">菜单</span>
+                    <span v-if="scope.row.temp_type === 3">按钮</span>
                 </template>
             </el-table-column>
             <el-table-column  align="center" prop="icon" label="图标" >
@@ -82,13 +82,14 @@ export default {
     methods: {
         async fetchData() {
             const { data } = await api.getList(this.query)
-            this.list = data
+            this.list = data.data
+    
         },
 
         // 新增菜单, id作为 新菜单 的 parentId
         handleAdd(id) {
             // id = 0 是在条件查询的地方点击的，是新增一级菜单 ，否则新增的是某菜单下的子菜单
-            this.edit.formData.parentId = id
+            this.edit.formData.parent_id = id
             this.edit.title = '新增'
             this.edit.visible = true
         },
@@ -103,7 +104,7 @@ export default {
         // 编辑菜单
         handleEdit(id) {
             api.getById(id).then(response => {
-                if(response.code === 20000) {
+                if(response.code === 0) {
                     this.edit.formData = response.data
                     //设置标题
                     this.edit.title = '编辑'
@@ -114,7 +115,7 @@ export default {
 
         // 删除菜单
         handleDelete(id) {
-            this.$confirm('确认删除当前节点与子节点记录吗?', '提示', {
+            this.$confirm('确认删除当前节点菜单与子节点菜单吗?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
@@ -123,7 +124,7 @@ export default {
                 api.deleteById(id).then(response => {
                     // 处理响应结果提示
                     this.$message({
-                        type: response.code === 20000 ? 'success': 'error',
+                        type: response.code === 0 ? 'success': 'error',
                         message: response.message
                     })
                 })

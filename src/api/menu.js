@@ -6,16 +6,16 @@ export default {
     // 查询菜单列表
     getList(query) {
         return request({
-            url: `/menu/search`,
-            method: 'post',
-            data: query
+            url: `/template`,
+            method: 'get',
+            params: query
         })
     },
 
     // 新增
     add(data) {
         return request({
-            url: `/menu`,
+            url: `/template`,
             method: 'post',
             data
         })
@@ -24,7 +24,7 @@ export default {
     // 查询详情 
     getById(id) {
         return request({
-            url: `/menu/${id}`,
+            url: `/template/${id}`,
             method: 'get'
         })
     },
@@ -32,7 +32,7 @@ export default {
     // 更新
     update(data) {
         return request({
-            url: `/menu`,
+            url: `/template`,
             method: 'put',
             data
         })
@@ -40,7 +40,7 @@ export default {
 
     deleteById(id) { 
         return request({
-            url: `/menu/${id}`,
+            url: `/template/${id}`,
             method: 'delete'
         })
     }

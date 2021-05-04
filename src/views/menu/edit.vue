@@ -4,11 +4,11 @@
 
         <el-form :rules="rules" ref="formData" :model="formData" label-width="100px" 
             label-position="right" style="width: 400px" status-icon>
-            <el-form-item label="类型：" prop="type">
-               <el-radio-group v-model="formData.type" >
+            <el-form-item label="类型：" prop="temp_type">
+               <el-radio-group v-model="formData.temp_type" >
                     <el-radio :label="1">目录</el-radio>
                     <el-radio :label="2">菜单</el-radio>
-                    <el-radio :label="3" v-if="formData.parentId !== 0">按钮</el-radio>
+                    <el-radio :label="3" v-if="formData.parent_id !== 0">按钮</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="名称：" prop="name">
@@ -20,8 +20,10 @@
             <el-form-item label="请求地址：" prop="url" v-if="formData.type != 3">
                 <el-input v-model="formData.url"></el-input>
             </el-form-item>
-            
-            <el-form-item label="排序：" prop="sort">
+            <el-form-item label="图标：" prop="icon" v-if="formData.type != 3">
+                <el-input v-model="formData.icon"></el-input>
+            </el-form-item>
+            <el-form-item label="排序：" prop="sort"> 
                 <el-input-number v-model="formData.sort" :min="1" :max="10000" style="width: 300px">
                 </el-input-number>
             </el-form-item>

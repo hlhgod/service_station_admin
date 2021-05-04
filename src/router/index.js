@@ -190,6 +190,21 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/analyse',
+    component: Layout,
+    redirect:import('@/views/analyse/index'),
+    name: 'analyse',
+    
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/analyse/index'),
+        meta: { title: '分析统计', icon: 'el-icon-pie-chart' }
+      }
+    ]
+  },
+  {
     path: '/system',
     component: Layout,
     redirect: '/system/role',

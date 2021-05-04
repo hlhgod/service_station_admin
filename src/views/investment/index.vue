@@ -1,42 +1,47 @@
 <template>
     <div class="app-container">
         <div class="filter-container">
-            <el-input
-                v-model="listQuery.title"
-                placeholder="标题"
-                style="width: 200px"
-                class="filter-item"
-                @keyup.enter.native="handleFilter"
-            />
-
-            <el-button
-                v-waves
-                class="filter-item"
-                type="primary"
-                icon="el-icon-search"
-                @click="handleFilter"
-            >
-                查找
-            </el-button>
-            <el-button
-                class="filter-item"
-                style="margin-left: 10px"
-                type="primary"
-                icon="el-icon-edit"
-                @click="handleCreate"
-            >
-                增加
-            </el-button>
-            <el-button
-                v-waves
-                :loading="downloadLoading"
-                class="filter-item"
-                type="primary"
-                icon="el-icon-download"
-                @click="handleDownload"
-            >
-                导出
-            </el-button>
+            <el-form :inline="true" :model="query" size="mini">
+                <el-form-item label="标题信息:">
+                    <el-input
+                        v-model="listQuery.title"
+                        placeholder="标题"
+                        style="width: 200px"
+                        class="filter-item"
+                        @keyup.enter.native="handleFilter"
+                    />
+                </el-form-item>
+                <el-form-item>
+                    <el-button
+                        v-waves
+                        class="filter-item"
+                        type="primary"
+                        icon="el-icon-search"
+                        @click="handleFilter"
+                    >
+                        查找
+                    </el-button>
+                    <el-button
+                        class="filter-item"
+                        style="margin-left: 10px"
+                        type="primary"
+                        icon="el-icon-edit"
+                        @click="handleCreate"
+                    >
+                        增加
+                    </el-button>
+                    <el-button
+                        v-waves
+                        :loading="downloadLoading"
+                        class="filter-item"
+                        type="primary"
+                        icon="el-icon-download"
+                        @click="handleDownload"
+                    >
+                        导出
+                    </el-button>
+                </el-form-item>
+            </el-form>
         </div>
 
         <el-table
@@ -63,17 +68,20 @@
             </el-table-column>
             <el-table-column label="招商信息标题" min-width="250px">
                 <template slot-scope="{ row }">
-                    <span class="link-type" >{{
-                        row.title
-                    }}</span>
-                    
+                    <span class="link-type">{{ row.title }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="附件" min-width="200px">
                 <template slot-scope="{ row }">
-                    <div class="link-type" v-for="item in row.attachment" :key="item.id">
-                        <a :href="item.url"><i class="el-icon-tickets"></i>{{item.name}}</a></div>
-                    
+                    <div
+                        class="link-type"
+                        v-for="item in row.attachment"
+                        :key="item.id"
+                    >
+                        <a :href="item.url"
+                            ><i class="el-icon-tickets"></i>{{ item.name }}</a
+                        >
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column label="发布日期" width="160px" align="center">
@@ -249,8 +257,6 @@ export default {
             token: "",
             listLoading: true,
 
-            
-
             listQuery: {
                 page: 1,
                 limit: 20,
@@ -273,8 +279,8 @@ export default {
                 title: "",
                 brief: "",
                 content: "",
-                attachment:[],
-                fileList:[],
+                attachment: [],
+                fileList: [],
             },
             dialogFormVisible: false,
             dialogStatus: "",
@@ -309,7 +315,7 @@ export default {
                 ],
             },
             downloadLoading: false,
-            updateAddress:""
+            updateAddress: "",
         };
     },
     created() {
@@ -401,7 +407,7 @@ export default {
             console.log("temp:", this.temp);
             this.getContent(this.temp.id);
             this.temp.created_at = new Date(this.temp.created_at);
-            
+
             this.dialogStatus = "update";
             this.dialogFormVisible = true;
             this.$nextTick(() => {
@@ -470,24 +476,22 @@ export default {
             this.downloadLoading = true;
             import("@/vendor/Export2Excel").then((excel) => {
                 const tHeader = [
-                    "timestamp",
-                    "title",
-                    "type",
-                    "importance",
-                    "status",
+                    "id",
+                    "标题",
+                    "招商内容",
+                    "创建时间",
                 ];
                 const filterVal = [
-                    "timestamp",
+                    "id",
                     "title",
-                    "type",
-                    "importance",
-                    "status",
+                    "content",
+                    "created_at",
                 ];
                 const data = this.formatJson(filterVal);
                 excel.export_json_to_excel({
                     header: tHeader,
                     data,
-                    filename: "table-list",
+                    filename: "百企招百商",
                 });
                 this.downloadLoading = false;
             });

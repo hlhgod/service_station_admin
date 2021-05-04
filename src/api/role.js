@@ -48,7 +48,7 @@ export default {
     // 通过角色id查询所拥有的菜单ids
     getMenuIdsByRoleId(id) {
         return request({
-            url: `/role/${id}/menu/ids`,
+            url: `/role/permissions/${id}`,
             method: 'get'
         })
     },
@@ -56,7 +56,7 @@ export default {
     // 保存角色所拥有的菜单ids
     saveRoleMenu(id, menuIds){ 
         return request({
-            url: `/role/${id}/menu/save`,
+            url: `/role/permissions/`,
             method: 'post',
             data: menuIds
         })
