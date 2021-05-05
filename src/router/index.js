@@ -64,13 +64,13 @@ export const constantRoutes = [
     children: [
       {
         path: 'headimage',
-        name: 'headimage',
+        name: 'dangjianserviceheadimage',
         component: () => import('@/views/dangjianservice/headimage/index'),
         meta: { title: '图片设置', icon: 'el-icon-picture' }
       },
       {
         path: 'content',
-        name: 'content',
+        name: 'dangjianservicecontent',
         component: () => import('@/views/dangjianservice/content/index'),
         meta: { title: '内容管理', icon: 'document' }
       }
@@ -81,7 +81,7 @@ export const constantRoutes = [
   {
     path: '/hurreybusiness',
     component: Layout,
-    redirect:import('@/views/hurreybusiness/index'),
+    redirect:'/hurreybusiness/index',
     name: 'hurreybusiness',
     
     children: [
@@ -96,13 +96,13 @@ export const constantRoutes = [
   {
     path: '/investment',
     component: Layout,
-    redirect:import('@/views/investment/index'),
+    redirect:'/investment/index',
     name: 'investment',
     
     children: [
       {
         path: 'index',
-        name: 'index',
+        name: 'investmentindex',
         component: () => import('@/views/investment/index'),
         meta: { title: '百企招百商', icon: 'el-icon-picture' }
       }
@@ -113,19 +113,19 @@ export const constantRoutes = [
   {
     path: '/policy',
     component: Layout,
-    redirect:import('@/views/policy/headimage/index'),
+    redirect:'/policy/headimage',
     name: 'policy',
     meta: { title: '政策法规', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'headimage',
-        name: 'headimage',
+        name: 'policyheadimage',
         component: () => import('@/views/policy/headimage/index'),
         meta: { title: '图片设置', icon: 'el-icon-picture' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
+        path: 'content',
+        name: 'policyContent',
         component: () => import('@/views/policy/content/index'),
         meta: { title: '内容管理', icon: 'document' }
       }
@@ -136,13 +136,13 @@ export const constantRoutes = [
   {
     path: '/bridge',
     component: Layout,
-    redirect:import('@/views/bridge/index'),
+    redirect:'/bridge/index',
     name: 'bridge',
     
     children: [
       {
         path: 'index',
-        name: 'index',
+        name: 'bridgeindex',
         component: () => import('@/views/bridge/index'),
         meta: { title: '金融服务', icon: 'el-icon-picture' }
       }
@@ -177,13 +177,13 @@ export const constantRoutes = [
   {
     path: '/leader',
     component: Layout,
-    redirect:import('@/views/leader/index'),
+    redirect:"/leader/index",
     name: 'leader',
     
     children: [
       {
         path: 'index',
-        name: 'index',
+        name: 'leaderindex',
         component: () => import('@/views/leader/index'),
         meta: { title: '领导构成', icon: 'el-icon-picture' }
       }
@@ -192,13 +192,13 @@ export const constantRoutes = [
   {
     path: '/analyse',
     component: Layout,
-    redirect:import('@/views/analyse/index'),
+    redirect:'/analyse/index',
     name: 'analyse',
     
     children: [
       {
         path: 'index',
-        name: 'index',
+        name: 'analyseindex',
         component: () => import('@/views/analyse/index'),
         meta: { title: '分析统计', icon: 'el-icon-pie-chart' }
       }

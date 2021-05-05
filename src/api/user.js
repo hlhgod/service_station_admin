@@ -10,7 +10,7 @@ export function login(data) {
 
 export function getInfo(token) {
   return request({
-    url: '/auth/info',
+    url: '/account/info',
     method: 'get',
     params: { token }
   })
@@ -28,8 +28,8 @@ export function logout() {
 export function getList(query, current = 1, size = 20) {
   return request({
     url: `/account`,
-    method: 'post',
-    data: {...query, current, size}
+    method: 'get',
+    params: {...query, current, size}
   })
 }
 
@@ -78,25 +78,25 @@ export function getRoleIdsByUserId( id ) {
 // 保存用户拥有角色
 export function saveUserRole(id, roleIds) {
   return request({
-    url: `/account/${id}/role/save`,
-    method: 'post',
-    data: roleIds
+    url: `/account`,
+    method: 'put',
+    data: {id,'role_id':roleIds}
   })
 }
 
 // 提交修改新密码
 export function updatePassword(data) {
   return request({
-    url: `/account/password`,
+    url: `/account`,
     method: 'put',
-    data
+    data: {'id':data.userId,'passwd':data.newPassword}
   })
 }
 
 // 查询当前登录用户所拥有的菜单和按钮权限
 export function getUserMenuList(userId) {
   return request({
-    url: `/menu/user/${userId}`,
+    url: `/template/type`,
     method: 'get'
   })
 }

@@ -69,7 +69,7 @@ export default {
                     // 要将userId进行提交给后台
                     this.formData.userId = this.userId
                     api.updatePassword(this.formData).then(response => {
-                        if(response.code === 20000) {
+                        if(response.code === 0) {
                             this.$message({message: '修改密码成功', type: 'success'})
                             this.handleClose()
                         }else {

@@ -3,21 +3,21 @@
     :before-close="handleClose">
         <el-form :rules="rules" ref="formData" :model="formData" label-width="100px" 
             label-position="right" style="width: 400px" status-icon>
-            <el-form-item label="用户名：" prop="username">
-                <el-input v-model="formData.username" maxlength="30"></el-input>
+            <el-form-item label="用户名：" prop="login_name">
+                <el-input v-model="formData.login_name" maxlength="30"></el-input>
             </el-form-item>
-            <el-form-item label="昵称：" prop="nickName">
-                <el-input v-model="formData.nickName" maxlength="50"></el-input>
+            <el-form-item label="昵称：" prop="account_name">
+                <el-input v-model="formData.account_name" maxlength="50"></el-input>
             </el-form-item>
-            <el-form-item label="手机号：" prop="mobile">
-                <el-input v-model="formData.mobile" maxlength="11"></el-input>
+            <el-form-item label="手机号：" prop="contact_way">
+                <el-input v-model="formData.contact_way" maxlength="11"></el-input>
             </el-form-item>
             
             
             
-            <el-form-item label="帐号锁定：" prop="isAccountNonLocked">
+            <el-form-item label="帐号锁定：" prop="is_enable">
                 <!-- (1 未锁定，0已锁定) -->
-                <el-radio-group v-model="formData.isAccountNonLocked" >
+                <el-radio-group v-model="formData.is_enable" >
                     <el-radio :label="1" border>未锁定</el-radio>
                     <el-radio :label="0" border>已锁定</el-radio>
                 </el-radio-group>
@@ -56,12 +56,12 @@ export default {
         return {
             // 校验表单
             rules: {
-                 username: [
+                 login_name: [
                      {required: true, message: '请输入用户名', trigger: 'blur'},
                      {min: 6, max: 30, message: '长度在 6 到 30 个字符', trigger: 'blur'}
                  ],
                  
-                 nickName: [
+                 account_name: [
                      {required: true, message: '请输入昵称', trigger: 'blur'}
                  ],
 
@@ -71,7 +71,7 @@ export default {
 
                 
 
-                isAccountNonLocked: [
+                is_enable: [
                     {required: true, message: '请选择', trigger: 'change'}
                 ]
             }
@@ -105,7 +105,7 @@ export default {
                 response = await api.add(this.formData)
             }
 
-            if(response.code = 20000) {
+            if(response.code = 0) {
                 this.$message({message: '保存成功', type: 'success'})
                 this.handleClose()
             }else {

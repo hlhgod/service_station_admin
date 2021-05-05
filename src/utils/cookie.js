@@ -9,7 +9,7 @@ export const Key = {
 
 class CookieClass {
   constructor() {
-    this.domain = process.env.VUE_APP_COOKIE_DOMAIN // 域名
+    //this.domain = process.env.VUE_APP_COOKIE_DOMAIN // 域名
     this.expireTime = 30 // 30 天
   }
 

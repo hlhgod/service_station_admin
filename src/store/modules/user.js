@@ -5,8 +5,12 @@ import { resetRouter } from '@/router'
 const getDefaultState = () => {
   return {
     token: getToken(),
-    name: '',
-    avatar: ''
+    login_name: '',
+    account_name:'',
+    department:'',
+    expiresIn:0,
+    avatar: '',
+    id:'',
   }
 }
 
@@ -19,8 +23,17 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+  SET_LOGIN_NAME: (state, name) => {
+    state.login_name = name
+  },
+  SET_ACCOUNT_NAME: (state, name) => {
+    state.account_name = name
+  },
+  SET_DEPARTMENT: (state, name) => {
+    state.department = name
+  },
+  SET_ID: (state, name) => {
+    state.id = name
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
@@ -35,8 +48,21 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         console.log('store:user',response)
         const { data } = response
+        //在store中保存token
         commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        
+        commit('SET_LOGIN_NAME',data.login_name)
+        
+        commit('SET_ACCOUNT_NAME',data.account_name)
+        
+        commit('SET_DEPARTMENT',data.department)
+        
+        commit('SET_AVATAR',data.avatar)
+        
+        commit('SET_ID',data.id)
+        
+        //在cookie中保存token
+        setToken(data.token,data.expiresIn)
         resolve()
       }).catch(error => {
         reject(error)
@@ -44,22 +70,25 @@ const actions = {
     })
   },
 
-  // get user info
+  //根据token获取用户信息get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
 
         if (!data) {
-          return reject('Verification failed, please Login again.')
+          return reject('校验失败，请重新登录.')
         }
 
         // const { name, avatar } = data
-        const name=data.account_name
-        const avatar=data.avatar
+        
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
+        // commit('SET_TOKEN', data.token)
+        commit('SET_LOGIN_NAME',data.login_name)
+        commit('SET_ACCOUNT_NAME',data.account_name)
+        commit('SET_DEPARTMENT',data.department)
+        commit('SET_AVATAR',data.avatar)
+        commit('SET_ID',data.id)
         resolve(data)
       }).catch(error => {
         reject(error)

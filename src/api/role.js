@@ -57,8 +57,8 @@ export default {
     saveRoleMenu(id, menuIds){ 
         return request({
             url: `/role/permissions/`,
-            method: 'post',
-            data: menuIds
+            method: 'put',
+            data: {'id':id,'permissions':menuIds}
         })
     }
     

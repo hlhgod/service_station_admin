@@ -57,6 +57,7 @@
 import api from '@/api/menu'
 
 import Edit from './edit'
+import getMenuTree from '../../utils/menu'
 
 export default {
     name: 'Menu', // 和对应路由表中配置的name值一致
@@ -82,6 +83,7 @@ export default {
     methods: {
         async fetchData() {
             const { data } = await api.getList(this.query)
+            console.log('menu:',data.data);
             this.list = data.data
     
         },

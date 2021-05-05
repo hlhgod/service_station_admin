@@ -20,22 +20,23 @@
             border
             style="width: 100%">
             <el-table-column  align="center" type="index" label="序号" width="60"></el-table-column>
-            <el-table-column  align="center" prop="username" label="用户名" ></el-table-column>
-            <el-table-column  align="center" prop="nickName" label="昵称" ></el-table-column>
+            <el-table-column  align="center" prop="login_name" label="用户名" ></el-table-column>
+            <el-table-column  align="center" prop="account_name" label="昵称" ></el-table-column>
+            <el-table-column  align="center" prop="contact_way" label="手机号" ></el-table-column>
             
             
             
-            <el-table-column  align="center" prop="isAccountNonLocked" label="帐号锁定" >
+            <el-table-column  align="center" prop="is_enable" label="帐号锁定" >
                 <!-- (1 未锁定，0已锁定) -->
                 <template slot-scope="scope">
-                    <el-tag v-if="scope.row.isAccountNonLocked === 0" type="danger">锁定</el-tag>
-                    <el-tag v-if="scope.row.isAccountNonLocked === 1" type="success">正常</el-tag>
+                    <el-tag v-if="scope.row.is_enable === 0" type="danger">锁定</el-tag>
+                    <el-tag v-if="scope.row.is_enable === 1" type="success">正常</el-tag>
                 </template>
             </el-table-column>
             
             
             <el-table-column  align="center" label="操作" width="330">
-                <template slot-scope="scope" v-if="scope.row.isEnabled === 1">
+                <template slot-scope="scope" v-if="scope.row.is_enable === 1">
                     <el-button type="success" @click="handleEdit(scope.row.id)" size="mini">编辑</el-button>
                     <el-button type="danger"  @click="handleDelete(scope.row.id)"  size="mini">删除</el-button>
                     <el-button type="primary" @click="handleRole(scope.row.id)" size="mini">设置角色</el-button>
@@ -120,8 +121,8 @@ export default {
     methods: {
         async fetchData() {
             const {data} = await api.getList(this.query, this.page.current, this.page.size)
-            this.list = data.records
-            console.log('data.records',data.records)
+            this.list = data
+            console.log('data.records',data)
             this.page.total = data.total
         },
 
@@ -185,13 +186,15 @@ export default {
 
         // 设置角色
         handleRole(id) {
-            this.role.userId = id
-            api.getRoleIdsByUserId(id).then(response => {
-                // 角色id 传递给子组件
-                this.role.roleIds = response.data
-                // 弹出
-                this.role.visible = true
-            })
+            // this.role.userId = id
+            // api.getRoleIdsByUserId(id).then(response => {
+            //     // 角色id 传递给子组件
+            //     this.role.roleIds = response.data
+            //     // 弹出
+            //     this.role.visible = true
+            // })
+            this.role.userId=id;
+            this.role.visible = true
         },
 
         
@@ -213,7 +216,7 @@ export default {
         saveUserRole(roleIds) {
             // console.log('saveUserRole', roleIds)
             // 保存用户角色信息
-            api.saveUserRole(this.role.userId, roleIds).then(response => {
+            api.saveUserRole(parseInt(this.role.userId), parseInt(roleIds)).then(response => {
                 if(response.code === 0) {
                     this.$message( {message: '分配角色成功', type: 'success'} )
                     this.role.visible = false
